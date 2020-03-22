@@ -1,5 +1,5 @@
 # Using lightweight alpine image
-FROM 3.7.7-alpine3.10
+FROM python:3.7.7-alpine3.10
 # Defining working directory and copy the requriments file
 WORKDIR /usr/src/myapp
 COPY requirements.txt .
