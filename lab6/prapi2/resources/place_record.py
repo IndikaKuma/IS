@@ -24,6 +24,29 @@ class PlaceRecord(Resource):
                 return record, 200  # return 200 HTTP status code to indicate success
         return {"message": "Place record not found"}, 404  # return 404 HTTP status code to indicate resource not found
 
+    def put(self, name):
+        parser = reqparse.RequestParser()
+        parser.add_argument('rating', type=int, help='Rate to charge for this resource')
+        args = parser.parse_args(strict=True)
+
+        for record in placeRecords:
+            if name == record["name"]:
+                record["rating"] = args["rating"]
+                return record, 200
+
+        return {"message": "Place record not found"}, 404
+
+    def delete(self, name):
+        to_be_deleted = None
+        for record in placeRecords:
+            if name == record["name"]:
+                to_be_deleted = record
+                break
+
+        if to_be_deleted:
+            placeRecords.remove(to_be_deleted)
+            return "{} is deleted.".format(name), 200
+        return {"message": "Place record not found"}, 404
 
 # resource collection place records
 class PlaceRecords(Resource):
