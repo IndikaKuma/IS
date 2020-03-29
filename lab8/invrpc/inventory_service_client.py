@@ -16,14 +16,14 @@ def run():
     channel = grpc.insecure_channel('localhost:5005')
     stub = inventory_service_pb2_grpc.InventoryServiceStub(channel)
     response = stub.GetProductQuantity(inventory_service_pb2.ProductType(type="Laptop"))
-    print("Quantity for Product Type Laptop : " + str(response.amount))
+    logging.info("Quantity for Product Type Laptop : " + str(response.amount))
 
     product_list = generate_product_list()
     response = stub.GetStockSummary(product_list)
-    print("Quantity for Product Type Laptop : " + str(response.productStocks["Laptop"].amount))
-    print("Quantity for Product Type Phone : " + str(response.productStocks["Phone"].amount))
+    logging.info("Quantity for Product Type Laptop : " + str(response.productStocks["Laptop"].amount))
+    logging.info("Quantity for Product Type Phone : " + str(response.productStocks["Phone"].amount))
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    logging.basicConfig(level=logging.DEBUG)
     run()

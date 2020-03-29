@@ -43,11 +43,13 @@ class InventoryService(inventory_service_pb2_grpc.InventoryServiceServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     inventory_service_pb2_grpc.add_InventoryServiceServicer_to_server(InventoryService(), server)
+    logging.info('InventoryService Deployed')
     server.add_insecure_port('[::]:5005')
     server.start()
+    logging.info('Server Started')
     server.wait_for_termination()
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    logging.basicConfig(level=logging.DEBUG)
     serve()
