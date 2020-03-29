@@ -13,7 +13,7 @@ def generate_product_list():
 
 
 def run():
-    channel = grpc.insecure_channel('localhost:50051')
+    channel = grpc.insecure_channel('localhost:5005')
     stub = inventory_service_pb2_grpc.InventoryServiceStub(channel)
     response = stub.GetProductQuantity(inventory_service_pb2.ProductType(type="Laptop"))
     print("Quantity for Product Type Laptop : " + str(response.amount))
