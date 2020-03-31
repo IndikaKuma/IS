@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto3"; // protocol buffers version
 package ordermgt;
 // The inventory service definition.
 service InventoryService {
