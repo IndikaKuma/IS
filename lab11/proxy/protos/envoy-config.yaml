@@ -24,7 +24,7 @@ static_resources:
               # NOTE: by default, matching happens based on the gRPC route, and not on the incoming request path.
               # Reference: https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/grpc_json_transcoder_filter#route-configs-for-transcoded-requests
               - match: { prefix: "/ordermgt.InventoryService" }
-                route: { cluster: grpc, timeout: { seconds: 60 } }
+                route: { cluster: grpc-backend-services, timeout: { seconds: 60 } }
           http_filters:
           - name: envoy.filters.http.grpc_json_transcoder
             typed_config:
@@ -39,7 +39,7 @@ static_resources:
           - name: envoy.filters.http.router
 
   clusters:
-  - name: grpc
+  - name: grpc-backend-services
     connect_timeout: 1.25s
     type: logical_dns
     lb_policy: round_robin
