@@ -1,8 +1,5 @@
-from flask import Flask
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Resource, reqparse
 
-app = Flask(__name__)
-api = Api(app)
 inventories = [
     {
         "name": "Laptop",

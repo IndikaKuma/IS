@@ -1,9 +1,7 @@
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import request
+from flask_restful import Resource, reqparse
 import random
 
-app = Flask(__name__)
-api = Api(app)
 orderRecords = [
     {
         "id": "id1",
@@ -12,6 +10,7 @@ orderRecords = [
         "unit price": 444.50
     }
 ]
+
 
 class Order(Resource):
     def get(self, id):
