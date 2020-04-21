@@ -1,7 +1,10 @@
+import json
+
 import requests
 from flask import request
 from flask_restful import Resource
 import pika
+
 
 class Orders(Resource):
 
@@ -23,9 +26,10 @@ class Orders(Resource):
             # queue name as routing_key
             channel.basic_publish(exchange='',
                                   routing_key='order_reqd',
-                                  body=record_to_be_created)
-            print(" [x] Sent 'Hello World!'")
+                                  body=json.dumps(record_to_be_created))
+            print("[x] Sent 'order_reqd!'")
             connection.close()
+            return {"message": "[x] Sent 'order_reqd!'"}, 200
 
         else:
             return {"message": "Order cannot be accepted at the moment :  out-of-stock"}, 200
