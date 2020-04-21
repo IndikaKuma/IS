@@ -8,7 +8,7 @@
   "port": 8081,
   "endpoints": [
     {
-      "endpoint": "/orders",
+      "endpoint": "/orders/{id}",
       "method": "POST",
       "extra_config": {
         "github.com/devopsfaith/krakend/proxy": {
@@ -19,22 +19,22 @@
       "concurrent_calls": 1,
       "backend": [
         {
-          "url_pattern": "/orders",
+          "url_pattern": "/orders/{id}",
           "encoding": "json",
           "sd": "static",
           "extra_config": {},
-          "method": "POST",
+          "method": "GET",
           "host": [
             "http://172.17.0.3:5000/"
           ],
           "disable_host_sanitize": false
         },
         {
-          "url_pattern": "/products/Laptop/quantity?value=${resp0_quantity}",
+          "url_pattern": "/products/{resp0_product type}/quantity?value=${resp0_quantity}",
           "encoding": "json",
           "sd": "static",
           "extra_config": {},
-          "method": "PUT",
+          "method": "GET",
           "host": [
             "http://172.17.0.2:5000/"
           ],
