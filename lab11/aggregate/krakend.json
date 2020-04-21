@@ -43,13 +43,13 @@
       ]
     },
     {
-      "endpoint": "/ordersinventories/{product}",
+      "endpoint": "/ordersinventories/{producttype}/{id}",
       "method": "GET",
       "output_encoding": "json",
       "concurrent_calls": 1,
       "backend": [
         {
-          "url_pattern": "/orders/{product}",
+          "url_pattern": "/orders/{id}",
           "encoding": "json",
           "sd": "static",
           "extra_config": {},
@@ -60,7 +60,7 @@
           "disable_host_sanitize": false
         },
         {
-          "url_pattern": "/products/{product}/quantity",
+          "url_pattern": "/products/{producttype}/quantity",
           "encoding": "json",
           "sd": "static",
           "extra_config": {},
