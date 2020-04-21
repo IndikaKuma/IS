@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "extra_config": {},
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "name": "InventoryOrderAggregate",
+  "port": 8081,
+  "endpoints": [
+    {
+      "endpoint": "/orders",
+      "method": "POST",
+      "extra_config": {
+        "github.com/devopsfaith/krakend/proxy": {
+          "sequential": true
+        }
+      },
+      "output_encoding": "json",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/orders",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {},
+          "method": "POST",
+          "host": [
+            "http://172.17.0.3:5000/"
+          ],
+          "disable_host_sanitize": false
+        },
+        {
+          "url_pattern": "/products/{product type}/quantity?value=${resp0_quantity}",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {},
+          "method": "PUT",
+          "host": [
+            "http://172.17.0.2:5000/"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/ordersinventories/{product}",
+      "method": "GET",
+      "extra_config": {
+        "github.com/devopsfaith/krakend/proxy": {
+          "sequential": true
+        }
+      },
+      "output_encoding": "json",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/orders/{product}",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {},
+          "method": "GET",
+          "host": [
+            "http://172.17.0.2:5000/"
+          ],
+          "disable_host_sanitize": false
+        },
+        {
+          "url_pattern": "/products/{product}/quantity",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {},
+          "method": "GET",
+          "host": [
+            "http://172.17.0.3:5000/"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ]
+}
