@@ -9,7 +9,7 @@
   "endpoints": [
     {
       "endpoint": "/orders/{id}",
-      "method": "POST",
+      "method": "GET",
       "extra_config": {
         "github.com/devopsfaith/krakend/proxy": {
           "sequential": true
@@ -27,10 +27,13 @@
           "host": [
             "http://172.17.0.3:5000/"
           ],
-          "disable_host_sanitize": false
+          "disable_host_sanitize": false,
+          "mapping": {
+            "product type": "type"
+          }
         },
         {
-          "url_pattern": "/products/{resp0_product type}/quantity?value=${resp0_quantity}",
+          "url_pattern": "/products/{resp0_type}/quantity?value={resp0_quantity}",
           "encoding": "json",
           "sd": "static",
           "extra_config": {},
