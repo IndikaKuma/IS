@@ -1,14 +1,24 @@
 import json
 from threading import Thread
+
 import pika
 import requests
 
 
-def callback(ch, method, properties, body):
+def callback(ch, method, props, body):
     print(" [x] Received %r" % body)
     payload = json.loads(body.decode('utf-8'))
     msg = requests.post("http://127.0.0.1:5002/orders/", json=payload)
-    print(msg.content)
+    connection = pika.BlockingConnection(pika.ConnectionParameters('104.198.35.199'))
+    channel = connection.channel()
+    channel.queue_declare(queue=props.reply_to)
+    channel.basic_publish(exchange='',
+                     routing_key=props.reply_to,
+                     properties=pika.BasicProperties(correlation_id= \
+                                                         props.correlation_id),
+                     body=msg.content)
+    channel.basic_ack(delivery_tag=method.delivery_tag)
+    connection.close()
 
 
 def pull_message():
