@@ -1,0 +1,4 @@
+flask-restful
+requests
+pika
+json

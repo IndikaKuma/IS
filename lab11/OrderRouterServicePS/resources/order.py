@@ -20,12 +20,13 @@ class Orders(Resource):
             # to establish a connection with RabbitMQ server
             connection = pika.BlockingConnection(pika.ConnectionParameters('35.226.146.183'))
             channel = connection.channel()
-            # Create a queue for the event order_reqd
-            channel.queue_declare(queue='order_reqd')
-            # With the default exchange (empty string), we can say to which queue the message should go by using the
-            # queue name as routing_key
-            channel.basic_publish(exchange='',
-                                  routing_key='order_reqd',
+            # Create an exchange of typo topic
+            channel.exchange_declare(exchange='order', exchange_type='topic')
+            # Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words,
+            # delimited by dots.  A message sent with a particular routing key will be delivered to all the queues
+            # that are bound with a matching binding key.
+            channel.basic_publish(exchange='order',
+                                  routing_key='order.create.inventory.update',
                                   body=json.dumps(record_to_be_created))
             print("[x] Sent 'order_reqd!'")
             connection.close()
