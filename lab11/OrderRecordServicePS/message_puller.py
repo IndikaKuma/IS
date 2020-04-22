@@ -11,7 +11,7 @@ def callback(ch, method, properties, body):
 
 
 def pull_message():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('35.226.146.183'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('104.198.35.199'))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='order', exchange_type='topic')
