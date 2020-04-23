@@ -13,7 +13,7 @@ service InventoryService {
     // Accepts a stream of ProductTypes, returning a StockSummary when aggregation is completed.
     rpc GetStockSummary (stream ProductType) returns (StockSummary) {
         option (google.api.http) = {
-            get: "/stocksummary/{type}"
+            get: "/stocksummary"
          };
     }
 }
