@@ -46,7 +46,7 @@ static_resources:
     dns_lookup_family: V4_ONLY
     http2_protocol_options: {}
     load_assignment:
-      cluster_name: grpc
+      cluster_name: grpc-backend-services
       endpoints:
       - lb_endpoints:
         - endpoint:
