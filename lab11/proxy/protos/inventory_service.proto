@@ -14,7 +14,6 @@ service InventoryService {
     rpc GetStockSummary (stream ProductType) returns (StockSummary) {
         option (google.api.http) = {
             get: "/stocksummary"
-            body: "type"
          };
     }
 }
