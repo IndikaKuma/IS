@@ -13,7 +13,7 @@ def callback(ch, method, properties, body):
 
 
 def pull_message():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('35.226.146.183'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('172.17.0.5'))
     channel = connection.channel()
     channel.queue_declare(queue='order_reqd')
     # When  a  message is received, the callback  method is triggered

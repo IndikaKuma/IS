@@ -12,13 +12,13 @@ class Orders(Resource):
         record_to_be_created = request.get_json(force=True)
         # Make a GET request to the Inventory Service. URI is dynamically created based on the data in the received
         # message
-        r = requests.get('http://127.0.0.1:5000/products/' + record_to_be_created['product type'] + '/quantity')
+        r = requests.get('http://172.17.0.3:5000/products/' + record_to_be_created['product type'] + '/quantity')
         ava_quantity = r.json()['quantity']
 
         # If quantify available > quantity requested
         if ava_quantity > record_to_be_created['quantity']:
             # to establish a connection with RabbitMQ server
-            connection = pika.BlockingConnection(pika.ConnectionParameters('35.226.146.183'))
+            connection = pika.BlockingConnection(pika.ConnectionParameters('172.17.0.5'))
             channel = connection.channel()
             # Create a queue for the event order_reqd
             channel.queue_declare(queue='order_reqd')
