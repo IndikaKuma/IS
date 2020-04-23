@@ -20,7 +20,7 @@ class Orders(Resource):
             # to establish a connection with RabbitMQ server
             connection = pika.BlockingConnection(pika.ConnectionParameters('172.17.0.5'))
             channel = connection.channel()
-            # Create an exchange of typo topic
+            # Create an exchange of type topic
             channel.exchange_declare(exchange='order', exchange_type='topic')
             # Messages sent to a topic exchange can't have an arbitrary routing_key - it must be a list of words,
             # delimited by dots.  A message sent with a particular routing key will be delivered to all the queues

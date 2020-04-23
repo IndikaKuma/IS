@@ -18,9 +18,13 @@ def pull_message():
 
     channel.exchange_declare(exchange='order', exchange_type='topic')
 
+    # the empty string - create a random queue name by the broker
+    # The exclusive flag - when the consumer connection is closed, the queue is deleted.
     result = channel.queue_declare('', exclusive=True)
     queue_name = result.method.queue
 
+    # * (star) can substitute for exactly one word.
+    # # (hash) can substitute for zero or more words.
     channel.queue_bind(exchange='order', queue=queue_name, routing_key="*.*.inventory.update")
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
