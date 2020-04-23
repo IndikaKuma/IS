@@ -7,12 +7,12 @@ import requests
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
     payload = json.loads(body.decode('utf-8'))
-    msg = requests.post("http://127.0.0.1:5002/orders/", json=payload)
+    msg = requests.post("http://127.0.0.1:5000/orders/", json=payload)
     print(msg.content)
 
 
 def pull_message():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('104.198.35.199'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('172.17.0.5'))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='order', exchange_type='topic')
