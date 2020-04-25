@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  order_approval_process:
+    image: wso2/wso2ei-business-process:6.5.0
+  inventory_service:
+    build:
+      context: ./InventoryService
+  order_record_service:
+    build:
+      context: ./OrderRecordService
