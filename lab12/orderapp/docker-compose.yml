@@ -2,9 +2,18 @@ version: '3.8'
 services:
   order_approval_process:
     image: wso2/wso2ei-business-process:6.5.0
+    depends_on:
+      - inventory_service
+      - order_record_service
+    ports:
+      - "9445:9445"
   inventory_service:
     build:
       context: ./InventoryService
+    ports:
+      - "5000:5000"
   order_record_service:
     build:
       context: ./OrderRecordService
+    ports:
+      - "5001:5000"
