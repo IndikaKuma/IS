@@ -40,6 +40,7 @@ class MessagePuller(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
+        logging.basicConfig(level=logging.DEBUG)
         self.start()
 
     def run(self):

@@ -8,6 +8,9 @@ import pika
 
 
 class Orders(Resource):
+    
+    def __init__(self):
+        logging.basicConfig(level=logging.DEBUG)
 
     def post(self):
         record_to_be_created = request.get_json(force=True)
