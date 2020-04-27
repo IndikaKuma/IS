@@ -5,7 +5,6 @@ services:
       context: ./OrderRouterServicePS
     container_name: order_router_service_ct
     depends_on:
-      - inventory_service
       - rabbitmq_service
     ports:
       - "5002:5000"
