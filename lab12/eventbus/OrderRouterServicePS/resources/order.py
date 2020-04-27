@@ -18,7 +18,7 @@ class Orders(Resource):
         # If quantify available > quantity requested
         if ava_quantity > record_to_be_created['quantity']:
             # to establish a connection with RabbitMQ server
-            connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq_ct'))
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq_ct'))
             channel = connection.channel()
             # Create an exchange of type topic
             channel.exchange_declare(exchange='order', exchange_type='topic')

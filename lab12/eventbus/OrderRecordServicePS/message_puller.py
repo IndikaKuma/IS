@@ -12,7 +12,7 @@ def callback(ch, method, properties, body):
 
 
 def pull_message():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq_ct'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq_ct'))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='order', exchange_type='topic')
