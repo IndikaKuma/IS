@@ -11,8 +11,7 @@ services:
     ports:
       - "51051:51051"
   inventory_grpc_service:
-    build:
-      context: https://github.com/IndikaKuma/IS.git#:/IS/lab8/invrpc/
+    build: https://github.com/IndikaKuma/IS.git#:/IS/lab8/invrpc/
     container_name: inventory_grpc_service_ct
     ports:
       - "5005:5005"
