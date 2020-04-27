@@ -1,4 +1,5 @@
 import json
+import logging
 
 import requests
 from flask import request
@@ -28,7 +29,7 @@ class Orders(Resource):
             channel.basic_publish(exchange='order',
                                   routing_key='order.create.inventory.update',
                                   body=json.dumps(record_to_be_created))
-            print("[x] Sent 'order_reqd!'")
+            logging.debug("[x] Sent 'order_reqd!'")
             connection.close()
             return {"message": "[x] Sent 'order_reqd!'"}, 200
 
