@@ -5,6 +5,7 @@ services:
     container_name: inventory_proxy_ct
     volumes:
       - ./envoy-config.yaml:/etc/envoy/envoy.yaml
+      - ./inventory_service.pb:/etc/envoy/inventory_service.pb
     depends_on:
       - inventory_grpc_service
     ports:
