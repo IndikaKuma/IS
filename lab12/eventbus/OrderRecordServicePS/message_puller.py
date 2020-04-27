@@ -7,10 +7,11 @@ import requests
 
 
 def callback(ch, method, properties, body):
-    print(" [x] Received %r" % body)
+    logging.info(" [x] Received %r" % body)
     payload = json.loads(body.decode('utf-8'))
     msg = requests.post("http://127.0.0.1:5000/orders/", json=payload)
     logging.info(msg.content)
+
 
 def pull_message():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq_ct'))
@@ -27,7 +28,7 @@ def pull_message():
     # # (hash) can substitute for zero or more words.
     channel.queue_bind(exchange='order', queue=queue_name, routing_key="order.create.*.*")
 
-    print(' [*] Waiting for messages. To exit press CTRL+C ' + queue_name)
+    logging.info(' [*] Waiting for messages. To exit press CTRL+C ' + queue_name)
 
     channel.basic_consume(
         queue=queue_name, on_message_callback=callback, auto_ack=True)
