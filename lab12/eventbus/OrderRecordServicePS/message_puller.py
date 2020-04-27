@@ -1,4 +1,5 @@
 import json
+import logging
 from threading import Thread
 import pika
 import requests
@@ -8,8 +9,7 @@ def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
     payload = json.loads(body.decode('utf-8'))
     msg = requests.post("http://127.0.0.1:5000/orders/", json=payload)
-    print(msg.content)
-
+    logging.info(msg.content)
 
 def pull_message():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq_ct'))
@@ -42,4 +42,7 @@ class MessagePuller(Thread):
 
     def run(self):
         while True:
-            pull_message()
+            try:
+                pull_message()
+            except Exception as ex:
+                logging.info(ex)
