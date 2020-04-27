@@ -10,7 +10,7 @@ import pika
 class Orders(Resource):
     
     def __init__(self):
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.INFO)
 
     def post(self):
         record_to_be_created = request.get_json(force=True)
@@ -32,7 +32,7 @@ class Orders(Resource):
             channel.basic_publish(exchange='order',
                                   routing_key='order.create.inventory.update',
                                   body=json.dumps(record_to_be_created))
-            logging.debug("[x] Sent 'order_reqd!'")
+            logging.info("[x] Sent 'order_reqd!'")
             connection.close()
             return {"message": "[x] Sent 'order_reqd!'"}, 200
 
