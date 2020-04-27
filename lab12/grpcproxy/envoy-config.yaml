@@ -52,5 +52,5 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: 172.17.0.2
+                address: inventory_grpc_service_ct
                 port_value: 5005
