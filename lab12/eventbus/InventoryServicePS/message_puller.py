@@ -1,4 +1,6 @@
 import json
+import logging
+import time
 from threading import Thread
 import pika
 import requests
@@ -9,7 +11,7 @@ def callback(ch, method, properties, body):
     payload = json.loads(body.decode('utf-8'))
     msg = \
         requests.put("http://127.0.0.1:5000/products/"+payload['product type']+"/quantity?value=" + str(payload['quantity']))
-    print(msg.content)
+    logging.info(msg.content)
 
 
 def pull_message():
@@ -43,4 +45,8 @@ class MessagePuller(Thread):
 
     def run(self):
         while True:
-            pull_message()
+            try:
+                pull_message()
+            except Exception as ex:
+                logging.info(ex)
+                time.sleep(30)

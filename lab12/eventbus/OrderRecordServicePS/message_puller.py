@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from threading import Thread
 import pika
 import requests
@@ -46,3 +47,4 @@ class MessagePuller(Thread):
                 pull_message()
             except Exception as ex:
                 logging.info(ex)
+                time.sleep(30)
