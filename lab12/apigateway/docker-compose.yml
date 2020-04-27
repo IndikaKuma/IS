@@ -1,22 +1,22 @@
 version: '3.8'
 services:
-  order_approval_process:
-    image: wso2/wso2ei-business-process:6.5.0
-    container_name: order_approval_process_ct
+  inventory_order_aggregate:
+    image: devopsfaith/krakend:1.1.1
+    container_name: inventory_order_aggregate_ct
+    volumes:
+      - ./krakend:/etc/krakend/
     depends_on:
       - inventory_service
       - order_record_service
     ports:
-      - "9445:9445"
+      - "8081:8081"
   inventory_service:
-    build:
-      context: ./InventoryService
-    container_name: inventory_service_ct
+    build: https://github.com/IndikaKuma/IS.git#:/lab9/InventoryService/
+    container_name: inventory_service_ct2
     ports:
       - "5000:5000"
   order_record_service:
-    build:
-      context: ./OrderRecordService
-    container_name: order_record_service_ct
+    build: https://github.com/IndikaKuma/IS.git#:/lab9/OrderRecordService/
+    container_name: order_record_service_ct2
     ports:
       - "5001:5000"
