@@ -16,7 +16,7 @@ class PlaceRecordModel:
     resource_fields = {
         'name': fields.String,
         'rating': fields.Float,
-        'address': AddressModel
+        'address': fields.Nested(AddressModel.resource_fields)
     }
 
     # Specify which of the resource fields are required
