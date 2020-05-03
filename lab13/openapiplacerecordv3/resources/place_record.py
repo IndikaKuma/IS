@@ -49,11 +49,11 @@ class PlaceRecord:
 
 class PlaceRecords:
     @staticmethod
-    def post(record_to_be_created):
-        name = record_to_be_created['name']
+    def post(body):
+        name = body['name']
         for record in placeRecords:
             if name == record["name"]:
                 return jsonify({"message": "Record with name {} already exists".format(name)}), 500
 
-        placeRecords.append(record_to_be_created)
-        return jsonify(record_to_be_created), 201  # 201 Created HTTP status code
+        placeRecords.append(body)
+        return jsonify(body), 201  # 201 Created HTTP status code

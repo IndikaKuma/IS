@@ -22,7 +22,7 @@ paths:
             type: string
       responses:
         '200':
-          description: a Place Record
+          description: Place Record
           content:
             application/json:
               schema:
@@ -35,88 +35,115 @@ paths:
                 $ref: "#/components/schemas/Error"
 
         default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      summary: Update a Palcce Record
+      tags:
+        - place records
+      operationId: resources.place_record.PlaceRecord.put
+      parameters:
+        - name: name
+          in: path
+          description: Place Record identifier
+          required: true
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: Place rating
+          required: true
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: Updated Place Record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaceRecord"
+        '404':
+          description: Place record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    delete:
+      summary: Delete a Palcce Record
+      tags:
+        - place records
+      operationId: resources.place_record.PlaceRecord.delete
+      parameters:
+        - name: name
+          in: path
+          description: Place Record identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Record was deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteMsg"
+        '404':
+          description: Place record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /placerecords/:
+    post:
+      summary: Create a New Place Record
+      operationId: resources.place_record.PlaceRecords.post
+      tags:
+        - place records
+      requestBody:
+        description: Place Information
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaceRecord"
+      responses:
+        '200':
+          description: Created Place Record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaceRecord"
+        '500':
+          description: Record with the same name already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-#    post:
-#      summary: Create a pet
-#      tags:
-#        - pets
-#      requestBody:
-#        description: Pet to add to the system
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/Pet"
-#      responses:
-#        '201':
-#          description: Null response
-#        default:
-#          description: unexpected error
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Error"
-#    put:
-#      summary: Update a pet
-#      tags:
-#        - pets
-#      requestBody:
-#        description: Pet to add to the system
-#        content:
-#          application/json:
-#            schema:
-#              allOf:
-#              - $ref: "#/components/schemas/Pet"
-#              - type: object
-#                required:
-#                - id
-#                properties:
-#                  id:
-#                    type: integer
-#                    format: int64
-#              example:
-#                id: 1
-#                name: chester
-#                tag: sleepy
-#      responses:
-#        '201':
-#          description: Null response
-#        default:
-#          description: unexpected error
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Error"
-#
-#
-#  /pets/{petId}:
-#    get:
-#      summary: Info for a specific pet
-#      tags:
-#        - pets
-#      parameters:
-#        - name: petId
-#          in: path
-#          required: true
-#          description: The id of the pet to retrieve
-#          schema:
-#            type: string
-#      responses:
-#        '200':
-#          description: Expected response to a valid request
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Pets"
-#        default:
-#          description: unexpected error
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Error"
 components:
   schemas:
     PlaceRecord:
@@ -124,7 +151,8 @@ components:
         - name
       properties:
         rating:
-          type: double
+          type: number
+          format: double
         name:
           type: string
         address:
@@ -141,6 +169,16 @@ components:
         city:
           type: string
     Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+    DeleteMsg:
       required:
         - code
         - message
