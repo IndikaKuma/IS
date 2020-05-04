@@ -47,3 +47,17 @@ class ErrorModel(Schema):
         }
     }
     required = ['message', 'code']
+
+
+class DeleteMsgModel(Schema):
+    type = 'object'
+    properties = {
+        'message': {
+            'type': 'string'
+        },
+        'code': {
+            'type': 'integer',
+            'format': 'int64',
+        }
+    }
+    required = ['message', 'code']
